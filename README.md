@@ -1,34 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BZ 4
 
-## Getting Started
+This repository contains code for my personal website. It is powered by
+NextJS, Pusher Channels & Upstash.
 
-First, run the development server:
+Events through Pusher Channels are sent through the channel `guestbook`
+with event name `msg`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Required environment variables
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `NEXT_PUBLIC_PUSHER_KEY` is the Pusher Channels app key.
+- `NEXT_PUBLIC_PUSHER_CLUSTER` is the Pusher Channels cluster.
+- `NEXT_PUBLIC_MAX_MSG_LEN` is the maximum message length (in characters, after trimming) that can be sent to the guestbook.
+- `PUSHER_ID` is the Pusher Channels app ID.
+- `PUSHER_SECRET` is the Pusher Channels app secret.
+- `REDIS_URL` is the URL of the Redis database for the guestbook.
+- `REDIS_TOKEN` is the token of the Redis database for the guestbook.
