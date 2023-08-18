@@ -19,7 +19,7 @@ export default function Home() {
                 </p>
             </div>
             <h1 className="text-3xl font-semibold mb-4 mt-6">my projects</h1>
-            <Card title="gsn.bz" desc="The very website you're looking at right now." url="https://www.gsn.bz" github="https://github.com/gsayson/bz4"/>
+            <Card title="gsn.bz" desc="The very website you're looking at right now." url="https://gsn.bz" github="https://github.com/gsayson/bz4"/>
             <Card title="goGSN" desc="A free link shortener running on Redis." url="https://go.gsn.bz"/>
             <h1 className="text-3xl font-semibold mb-4 mt-6">connect with me</h1>
             <p>
