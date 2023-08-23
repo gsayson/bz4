@@ -23,7 +23,7 @@ export default function Home() {
             <Card title="goGSN" desc="A free link shortener running on Redis." url="https://go.gsn.bz"/>
             <h1 className="text-3xl font-semibold mb-4 mt-6">connect with me</h1>
             <p>
-                I&apos;m particularly active on the <a className="italic link" href="https://javadiscord.net">Java Discord</a>. Feel free to talk to me over there!
+                I&apos;m particularly active on the <a className="italic link" href="https://discordjug.net">Java Discord</a>. Feel free to talk to me over there!
                 Alternatively, you can e-mail me at <a className="link" href="mailto:geruls@broskiclan.org">geruls@broskiclan.org</a>.
             </p>
         </div>
