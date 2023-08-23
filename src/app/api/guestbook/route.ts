@@ -18,11 +18,11 @@ const redis = new Redis({
 
 export async function GET() {
     const array: { message: string, date: string }[] = []
-    for(const key of (await redis.keys("*")).map((key) => DateTime.fromISO(key)).sort((a, b) => a < b ? -1 : a > b ? 1 : 0)) {
-        array.push({ date: key.toISO()!, message: (await redis.get(key.toISO()!))! })
+    for(const key of (await redis.keys("*")).map((key) => DateTime.fromISO(key, { zone: "utc" })).sort((a, b) => a < b ? -1 : a > b ? 1 : 0)) {
+        array.push({ date: key.toISO()!, message: (await redis.get(key.toISO()!))! as string })
     }
     return NextResponse.json({
-        messages: [array.reverse()]
+        messages: array.reverse()
     })
 }
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
             const limit = 20
             if(await redis.dbsize() >= (limit)) {
                 // time to delete; make space for the next entry.
-                const ka = (await redis.keys("*")).map((key) => DateTime.fromISO(key)).sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
+                const ka = (await redis.keys("*")).map((key) => DateTime.fromISO(key, { zone: "utc" })).sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
                 let index = 0
                 while(await redis.dbsize() >= (limit)) {
                     await redis.del(ka[index++].toISO()!)

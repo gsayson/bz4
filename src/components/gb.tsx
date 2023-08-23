@@ -4,7 +4,6 @@ import { PaperPlaneRight } from "@phosphor-icons/react"
 import { DateTime } from "luxon"
 import Pusher from "pusher-js"
 import { useEffect, useState } from "react"
-import useSWR from "swr"
 
 export function GuestbookForm() {
     return (
@@ -12,7 +11,7 @@ export function GuestbookForm() {
             async (e) => {
                 e.preventDefault()
                 const msg = new FormData(e.currentTarget).get("message")!.toString()
-                await fetch("/api/guestbook", { method: "POST", body: JSON.stringify({ message: msg, date: DateTime.now().toISO()! }) })
+                await fetch("/api/guestbook", { method: "POST", body: JSON.stringify({ message: msg, date: DateTime.utc().toISO()! }) })
             }
         }>
             <input 
@@ -35,30 +34,25 @@ const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
 
 const fetcher = (input: RequestInfo | URL, init?: RequestInit | undefined) => fetch(input, init).then(res => res.json())
 
-export function GuestbookMessages() {
-    const [comments, setComments] = useState<{ date: DateTime, message: string }[]>([])
-    const fetcher = (input: RequestInfo | URL, init?: RequestInit | undefined) => fetch(input, init).then((res) => res.json())
-    const { data, error, isLoading } = useSWR("/api/guestbook/", fetcher)
-    useEffect(() => {
-        if(data) {
-            const x: { date: string, message: string }[] = data.messages[0]
-            const y = x.map(((f) => {
-                return {
-                    message: f.message,
-                    date: DateTime.fromISO(f.date)
-                }
-            }))
-            setComments((f) => y)
-        }
-    }, [data])
+export function GuestbookMessages({ messages }: { messages: { date: string, message: string }[] }) {
+    const x: {
+        date: DateTime;
+        message: string;
+    }[] = []
+    for(const m of messages) {
+        x.push({
+            date: DateTime.fromISO(m.date, { zone: "utc" }),
+            message: m.message
+        })
+    }
+    x.sort((a, b) => a < b ? -1 : a > b ? 1 : 0)
+    const [comments, setComments] = useState<{ date: DateTime, message: string }[]>(x)
     useEffect(() => {
         const channel = pusher.subscribe("guestbook");
-        channel.bind("msg", (data: { message: string, date: string }) => setComments([{ message: data.message, date: DateTime.fromISO(data.date) }, ...comments]))
+        channel.bind("msg", (data: { message: string, date: string }) => setComments([{ date: DateTime.fromISO(data.date, { zone: "utc" }), message: data.message }, ...comments]))
         return () => pusher.unsubscribe("guestbook")
-    }, [comments]);
-    if(error) return <div>Failed to fetch comments.</div>
-    if(isLoading) return <h2>Loading...</h2>
+    }, [comments])
     return (
-        <>{comments.reverse().map((f, i) => <p key={i}><span className="text-zinc-400 dark:text-zinc-500">{f.date.toLocaleString(DateTime.DATETIME_MED)} &mdash; </span>{f.message}</p>)}</>
+        <>{comments.map((f, i) => <p key={i}><span className="text-zinc-400 dark:text-zinc-500" suppressHydrationWarning>{f.date.toLocal().toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)} &mdash; </span>{f.message}</p>)}</>
     )
 }
