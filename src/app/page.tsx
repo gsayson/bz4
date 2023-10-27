@@ -21,6 +21,7 @@ export default function Home() {
             <h1 className="text-3xl font-semibold mb-4 mt-6">my projects</h1>
             <Card title="gsn.bz" desc="The very website you're looking at right now." url="https://gsn.bz" github="https://github.com/gsayson/bz4"/>
             <Card title="goGSN" desc="A free link shortener running on Redis." url="https://go.gsn.bz"/>
+            <Card title="Djinn" desc="A build-time-oriented Java framework with minimal runtime reflection." github="https://github.com/gsayson/djinn"/>
             <h1 className="text-3xl font-semibold mb-4 mt-6">connect with me</h1>
             <p>
                 I&apos;m particularly active on the <a className="italic link" href="https://discordjug.net">Java Discord</a>. Feel free to talk to me over there!
