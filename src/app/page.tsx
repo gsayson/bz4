@@ -43,7 +43,7 @@ export default function Home() {
                     Right now, I study <em>group theory</em> in my free time. <a href="https://en.wikipedia.org/wiki/Group_theory" className="link">Group theory</a>{" "}
                     is a part of the discipline of <a href="https://en.wikipedia.org/wiki/Abstract_algebra" className="link">abstract algebra</a>,
                     which deals with generalizing properties away &ndash; e.g. addition, subtraction, function composition, or some other operation, and combining them with a set. Group theory arises in many areas, for example
-                    cryptography, and puzzles (<a href="https://en.wikipedia.org/wiki/Rubik%27s_Cube_group" className="link">the Rubik&apos; cube</a>).
+                    cryptography, and puzzles (<a href="https://en.wikipedia.org/wiki/Rubik%27s_Cube_group" className="link">the Rubik&apos;s cube</a>).
                 </p>
                 <p>
                     Other than that, I&apos;m reading Axler&apos;s <em>Linear Algebra Done Right</em> to establish a foothold for myself in linear algebra.
@@ -52,7 +52,7 @@ export default function Home() {
             <h1 className="text-2xl font-semibold mb-4 mt-8">my projects</h1>
             <Card title="gsn.bz" desc="The very website you're looking at right now." url="https://gsn.bz"
                 github="https://github.com/gsayson/bz4"/>
-            <Card title="goGSN" desc="A free link shortener running on Redis." url="https://go.gsn.bz"/>
+            <Card title="goGSN" desc="A link shortener running on Redis." github="https://github.com/gsayson/go-bz"/>
             <Card title="Djinn" desc="A build-time-oriented Java framework with minimal runtime reflection."
                 github="https://github.com/gsayson/djinn"/>
             <h1 className="text-2xl font-semibold mb-4 mt-6">connect with me</h1>
