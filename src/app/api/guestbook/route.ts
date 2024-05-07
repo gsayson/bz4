@@ -3,6 +3,25 @@ import { DateTime } from "luxon"
 import { NextRequest, NextResponse } from "next/server"
 import Pusher from "pusher"
 
+import {
+    RegExpMatcher,
+    TextCensor,
+    englishDataset,
+    englishRecommendedTransformers,
+} from "obscenity";
+
+const matcher = new RegExpMatcher({
+    ...englishDataset.build(),
+    ...englishRecommendedTransformers,
+});
+
+const censor = new TextCensor();
+
+const redis = new Redis({
+    url: process.env.REDIS_URL!,
+    token: process.env.REDIS_TOKEN!,
+});
+
 const pusher = new Pusher({
     appId: process.env.PUSHER_ID!,
     key: process.env.NEXT_PUBLIC_PUSHER_KEY!,
@@ -10,11 +29,6 @@ const pusher = new Pusher({
     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     useTLS: true
 });
-
-const redis = new Redis({
-    url: process.env.REDIS_URL!,
-    token: process.env.REDIS_TOKEN!,
-  })
 
 export async function GET() {
     const array: { message: string, date: string }[] = []
@@ -42,8 +56,9 @@ export async function POST(request: NextRequest) {
                     await redis.del(ka[index++].toISO()!)
                 }
             }
-            pusher.trigger("guestbook", "msg", body)
-            redis.set(body.date, body.message)
+            await pusher.trigger("guestbook", "msg", body)
+            const matches = matcher.getAllMatches(body.message)
+            await redis.set(body.date, censor.applyTo(body.message, matches))
             x = new NextResponse("{error:\"none\"}")
         }
         return x

@@ -5,6 +5,20 @@ import { DateTime } from "luxon"
 import Pusher from "pusher-js"
 import { useEffect, useState } from "react"
 
+import {
+    RegExpMatcher,
+    TextCensor,
+    englishDataset,
+    englishRecommendedTransformers,
+} from "obscenity";
+
+const matcher = new RegExpMatcher({
+    ...englishDataset.build(),
+    ...englishRecommendedTransformers,
+});
+
+const censor = new TextCensor();
+
 export function GuestbookForm() {
     return (
         <form className="w-full flex my-4" onSubmit={
@@ -49,7 +63,7 @@ export function GuestbookMessages({ messages }: { messages: { date: string, mess
     const [comments, setComments] = useState<{ date: DateTime, message: string }[]>(x)
     useEffect(() => {
         const channel = pusher.subscribe("guestbook");
-        channel.bind("msg", (data: { message: string, date: string }) => setComments([{ date: DateTime.fromISO(data.date, { zone: "utc" }), message: data.message }, ...comments]))
+        channel.bind("msg", (data: { message: string, date: string }) => setComments([{ date: DateTime.fromISO(data.date, { zone: "utc" }), message: censor.applyTo(data.message, matcher.getAllMatches(data.message)) }, ...comments]))
         return () => pusher.unsubscribe("guestbook")
     }, [comments])
     return (
