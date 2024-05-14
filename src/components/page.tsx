@@ -3,6 +3,7 @@
 import {GithubLogo, LinkedinLogo, TwitterLogo, YoutubeLogo} from "@phosphor-icons/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import React from "react";
 
 export function Navbar() {
     function NEntry({ href, children }: { href: string, children: React.ReactNode }) {

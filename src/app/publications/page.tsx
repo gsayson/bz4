@@ -3,8 +3,8 @@ export default function Publications() {
         <div>
             <h1 className="text-3xl font-semibold mb-4 lg:mb-6">my publications</h1>
             <p>
-                Here&apos;s a list of my publications in mathematics. For code, please
-                see my GitHub.
+                Here&apos;s a list of my publications in mathematics. I use
+                <a href={"https://typst.app"}>Typst</a> to create them.
             </p>
             <h2 className="text-2xl font-semibold mb-4 mt-6">further math 2023 notes</h2>
             <div className="space-y-4">
