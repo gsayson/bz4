@@ -59,7 +59,7 @@ export default function Home() {
             <Card title="goGSN" desc="A link shortener running on Redis." github="https://github.com/gsayson/go-bz"/>
             <Card title="Djinn" desc="A build-time-oriented Java framework with minimal runtime reflection, written for a 2023 coding jam."
                 github="https://github.com/gsayson/djinn"/>
-            <Card title="goGSN" desc="A web server framework for Java, written for a 2022 coding jam." github="https://github.com/gsayson/go-bz"/>
+            <Card title="Prive/Jitter" desc="A web server framework for Java, written for a 2022 coding jam." github="https://github.com/gsayson/go-bz"/>
             <h1 className="text-2xl font-semibold mb-4 mt-6">connect with me</h1>
             <p>
                 I&apos;m particularly active on the <a className="italic link" href="https://discordjug.net">Java
